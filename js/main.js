@@ -13,8 +13,6 @@ siteNav.querySelectorAll('a').forEach((link) => {
   });
 });
 
-/* The advice form remains a preview until Chelo and Olivia configure submissions. */
-
 /*
   Gifts — "Copiar" buttons (§15). Copies the raw account/phone digits to
   the clipboard and briefly swaps the button label to "Copiado"/"Copied".

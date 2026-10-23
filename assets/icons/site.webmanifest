@@ -1,8 +1,8 @@
 {
-  "name": "Chelo y Olivia",
-  "short_name": "Chelo & Olivia",
+  "name": "Maria Consuelo y Olivia",
+  "short_name": "Maria Consuelo & Olivia",
   "icons": [],
-  "theme_color": "#FDFBF6",
-  "background_color": "#FDFBF6",
+  "theme_color": "#C96760",
+  "background_color": "#C96760",
   "display": "standalone"
 }

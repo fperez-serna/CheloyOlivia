@@ -1,41 +1,35 @@
 /* ==========================================================================
-   Chelo & Olivia — wedding site
-
-   Palette for the celebration — the
-   original terracotta/sienna/sage/bone/ink from the brief is gone.
-   Variable NAMES kept as-is so nothing else in this file needed to
-   change, but they now hold:
-     --color-terracotta -> Coral rosado  #E2727A (hero, arcos)
-     --color-sienna      -> Naranja tostado #D9720F (acento, flores —
-                             used here for hover/active, the deeper/
-                             richer shift down from coral)
-     --color-sage         -> Oliva fresca #A6A94F (vestido, follaje)
-     --color-bone          -> Marfil claro #FBF6EC (base/fondo — aclarado
-                             2026-09-15 a pedido de la clienta)
-     --color-ink            -> Vino profundo #4A1F2B (sombra, texto, noche)
+   Maria Consuelo & Olivia — wedding site
    ========================================================================== */
 
+@font-face {
+  font-family: 'Bodoni Moda';
+  src: url('../assets/fonts/BodoniModa-Variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('../assets/fonts/SourceSerif4-Variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
+
 :root {
-  --color-terracotta: #E2727A;
-  --color-sienna:     #D9720F;
+  --color-terracotta: #2B0D12;
+  --color-sienna:     #2B0D12;
   --color-sage:       #A6A94F;
-  --color-bone:       #FDFBF6;
-  --color-ink:        #4A1F2B;
+  --color-bone:       #C96760;
+  --color-ink:        #2B0D12;
 
   --color-white: #FFFFFF;
 
-  /* Two-font system, per client decision: Fraunces (the original brief's
-     display serif, back after a round of trying handwriting fonts for
-     titles) for titles/headings, Hubballi for body/logistics text. Body
-     sized up from a typical 16px baseline (20px) since Hubballi's
-     handwriting-style letterforms read smaller than a plain sans at the
-     same pixel size. */
-  /* TYPOGRAPHY TEST (client request, 2026-09-15) — was 'Fraunces' /
-     'Hubballi'. Revert these two lines (and the Google Fonts <link> in
-     index.html) if she doesn't like it. */
-  --font-display: 'Playfair Display', 'Georgia', serif;
-  --font-body: 'Cormorant', serif;
-  --font-script: 'Cormorant', serif;
+  --font-display: 'Bodoni Moda', 'Bodoni MT', serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-script: 'Bodoni Moda', 'Bodoni MT', serif;
 
   --nav-height: 64px;
   --section-pad-y: clamp(40px, 6vh, 72px);
@@ -102,16 +96,9 @@ h1, h2, h3 {
   color: var(--color-ink);
 }
 
-/* Main titles (h1/h2 — section titles, hero names) stay in the
-   display script font; h3-level subtitles and subtitle-like elements
-   use the body serif at a real bold weight instead (client request,
-   2026-09-15). */
-h1, h2 {
+/* All heading levels use the requested display typeface. */
+h1, h2, h3 {
   font-family: var(--font-display);
-}
-
-h3 {
-  font-family: var(--font-body);
   font-weight: 700;
 }
 
@@ -159,15 +146,18 @@ h1, h2, h3 {
   margin-bottom: 1rem;
 }
 
-/* Centered titles and text from RSVP onward (client request,
-   2026-09-15) — Cover/Names banner stay as they were. */
+/* Centered titles and text from RSVP through the gifts section. */
 #rsvp .section-inner,
 #hotels .section-inner,
 #dresscode .section-inner,
-#gifts .section-inner,
-#advice .section-inner,
-#faq .section-inner {
+#gifts .section-inner {
   text-align: center;
+}
+
+#faq .section-inner {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
 }
 
 /* Details keeps its side-by-side ceremony/reception layout (left-
@@ -187,7 +177,7 @@ h1, h2, h3 {
 }
 
 .missing-info {
-  color: #B42318;
+  color: var(--color-terracotta);
   font-weight: 700;
 }
 
@@ -201,9 +191,9 @@ h1, h2, h3 {
   min-height: 160px;
   aspect-ratio: 16 / 9;
   padding: 20px;
-  border: 2px dashed #B42318;
-  background: rgba(180, 35, 24, 0.06);
-  color: #B42318;
+  border: 2px dashed var(--color-terracotta);
+  background: rgba(43, 13, 18, 0.06);
+  color: var(--color-terracotta);
   text-align: center;
 }
 
@@ -518,142 +508,6 @@ h1, h2, h3 {
 /* Letters section content is designed entirely in Canva by the couple —
    see index.html §5 comment. It renders as a plain .section--stub until
    the finished images are dropped in. */
-
-/* ==========================================================================
-   Advice / "Consejo para el matrimonio" — envelope art (client's Canva
-   illustration) + submission form, side by side on wide screens, stacked
-   on mobile.
-   ========================================================================== */
-
-.advice__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-  text-align: center;
-  margin-top: 24px;
-}
-
-@media (min-width: 720px) {
-  .advice__inner {
-    flex-direction: row;
-    align-items: center;
-    gap: 56px;
-  }
-}
-
-.advice__art {
-  flex: 0 0 auto;
-  width: min(380px, 85vw);
-  aspect-ratio: 3 / 4;
-}
-
-.advice__art img {
-  width: 100%;
-  height: auto;
-}
-
-.advice__panel {
-  width: 100%;
-  max-width: 480px;
-}
-
-.advice__question {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 1.4;
-  color: var(--color-terracotta);
-  margin: 16px 0 0;
-}
-
-.advice__prompt {
-  font-size: 17px;
-  line-height: 1.5;
-  margin: 12px 0 28px;
-}
-
-.advice__form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.advice__textarea,
-.advice__signature {
-  width: 100%;
-  background: var(--color-white);
-  border: 1px solid rgba(33, 30, 27, 0.25);
-  border-radius: 8px;
-  padding: 14px 16px;
-  font-family: var(--font-body);
-  font-size: 16px;
-  color: var(--color-ink);
-  resize: vertical;
-}
-
-.advice__textarea:focus,
-.advice__signature:focus {
-  outline: none;
-  border-color: var(--color-terracotta);
-}
-
-.advice__anon {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.advice__anon input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--color-terracotta);
-  cursor: pointer;
-}
-
-.advice__submit {
-  align-self: flex-start;
-  background: var(--color-terracotta);
-  color: var(--color-white);
-  padding: 12px 32px;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 8px;
-}
-
-.advice__submit:hover {
-  background: var(--color-sienna);
-}
-
-.advice__form :disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.advice__pending {
-  margin-top: 16px;
-}
-
-.advice__thanks {
-  font-size: 18px;
-  color: var(--color-sienna);
-}
-
-.advice__error {
-  color: var(--color-terracotta);
-  font-weight: 600;
-  font-size: 14px;
-  margin: 4px 0 0;
-}
-
-@media (min-width: 720px) {
-  .advice__form {
-    align-items: flex-start;
-  }
-}
 
 /* ==========================================================================
    RSVP — search-first flow (§4/§8)
@@ -1126,10 +980,6 @@ h1, h2, h3 {
   padding: 0 4px 20px;
   color: rgba(33, 30, 27, 0.62);
   line-height: 1.6;
-  /* #faq .section-inner centers everything by default (client request,
-     2026-09-15); the question stays unaffected since it's a flex row,
-     but the answer body is plain block text and inherited that
-     centering. Left-aligned instead (client request, 2026-09-24). */
   text-align: left;
 }
 
@@ -1493,7 +1343,7 @@ h1, h2, h3 {
   }
 }
 
-/* Phones: names stacked (Chelo / & / Olivia) at a size where
+/* Phones: names stacked (Maria Consuelo / & / Olivia) at a size where
    "Olivia" spans nearly the full width, then the divider, then
    place and date each on its own line (client layout, 2026-09-21). */
 @media (max-width: 719px) {

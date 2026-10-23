@@ -8,7 +8,7 @@
 const translations = {
   es: {
     'image.pending': 'Imagen pendiente',
-    'image.pendingAria': 'Imagen pendiente para Chelo y Olivia',
+    'image.pendingAria': 'Imagen pendiente para Maria Consuelo y Olivia',
     'footer.credit': 'Diseño y desarrollo por Atlas Tech &amp; Design',
     'nav.itinerary': 'Itinerario',
     'nav.rsvp': 'RSVP',
@@ -99,17 +99,6 @@ const translations = {
     'gallery.title': 'Nuestros momentos',
     'gallery.stub': 'Pendiente: set final de fotos de compromiso.',
 
-    'nav.advice': 'Consejo',
-    'advice.title': 'Consejos para Chelo y Olivia',
-    'advice.pending': 'El espacio para consejos está listo; el envío está pendiente de configurar.',
-    'advice.question': '¿Cuál es ese secreto que hace que el amor dure y la amistad crezca con los años?',
-    'advice.prompt': 'Compártenos uno o varios consejos que, para ti, sean clave para construir un matrimonio feliz, divertido y lleno de complicidad.',
-    'advice.placeholder': 'Escribe aquí...',
-    'advice.signature': 'Firma (tu nombre)',
-    'advice.anon': 'Anónimo',
-    'advice.submit': 'Enviar',
-    'advice.thanks': '¡Gracias por tu consejo!',
-
     'faq.eyebrow': 'FAQ',
     'faq.title': 'Preguntas frecuentes',
     'faq.stub': 'Pendiente: confirmar fecha y datos no incluidos en el documento.',
@@ -140,7 +129,7 @@ const translations = {
   },
   en: {
     'image.pending': 'Image pending',
-    'image.pendingAria': 'Image pending for Chelo and Olivia',
+    'image.pendingAria': 'Image pending for Maria Consuelo and Olivia',
     'footer.credit': 'Design and development by Atlas Tech &amp; Design',
     'nav.itinerary': 'Itinerary',
     'nav.rsvp': 'RSVP',
@@ -230,17 +219,6 @@ const translations = {
     'gallery.eyebrow': 'Gallery',
     'gallery.title': 'Our moments',
     'gallery.stub': 'Pending: final set of engagement photos.',
-
-    'nav.advice': 'Advice',
-    'advice.title': 'Advice for Chelo and Olivia',
-    'advice.pending': 'The advice space is ready; submissions are pending configuration.',
-    'advice.question': 'What is the secret that makes love last and friendship grow through the years?',
-    'advice.prompt': 'Share one or more pieces of advice that, for you, are key to building a marriage that is happy, fun, and full of complicity.',
-    'advice.placeholder': 'Write here...',
-    'advice.signature': 'Signature (your name)',
-    'advice.anon': 'Anonymous',
-    'advice.submit': 'Submit',
-    'advice.thanks': 'Thank you for your advice!',
 
     'faq.eyebrow': 'FAQ',
     'faq.title': 'Frequently asked questions',
