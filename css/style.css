@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Mirna & José Miguel — wedding site
+   Chelo & Olivia — wedding site
 
-   Palette replaced (2026-09-02) with Mirna's own corrected colors — the
+   Palette for the celebration — the
    original terracotta/sienna/sage/bone/ink from the brief is gone.
    Variable NAMES kept as-is so nothing else in this file needed to
    change, but they now hold:
@@ -1493,8 +1493,8 @@ h1, h2, h3 {
   }
 }
 
-/* Phones: names stacked (Mirna Be / & / José Miguel) at a size where
-   "José Miguel" spans nearly the full width, then the divider, then
+/* Phones: names stacked (Chelo / & / Olivia) at a size where
+   "Olivia" spans nearly the full width, then the divider, then
    place and date each on its own line (client layout, 2026-09-21). */
 @media (max-width: 719px) {
   .cover__names {

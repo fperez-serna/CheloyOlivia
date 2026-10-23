@@ -1,0 +1,747 @@
+/* Admin panel — utilitarian, reuses the site's color tokens from
+   ../css/style.css but overrides the font tokens with Raleway (sans-
+   serif) instead of the public site's Playfair/Cormorant — client
+   found the decorative fonts hard to read on a data-heavy page
+   (2026-09-15). Its own layout otherwise; not part of the public
+   site's visual design pass. */
+
+/* Without this, elements that also declare their own `display` (like
+   .admin-login's `display: flex`) override the browser's default
+   `[hidden] { display: none }` UA rule, since an author stylesheet
+   always wins over the UA stylesheet — that was the actual bug behind
+   the login box staying visible on top of the dashboard after a
+   successful sign-in. */
+[hidden] {
+  display: none !important;
+}
+
+.admin-body {
+  --font-display: 'Raleway', sans-serif;
+  --font-body: 'Raleway', sans-serif;
+  font-family: var(--font-body);
+  background: var(--color-bone);
+  color: var(--color-ink);
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   Login
+   ========================================================================== */
+
+/* Deliberately NOT centered with min-height:100vh — on mobile that
+   unit includes the area under the collapsible browser toolbar, which
+   pushed this content below the visible fold on load. Top-aligned with
+   plain padding instead, so it's always right there at the top. */
+.admin-init-loading {
+  padding: 60px 24px;
+  text-align: center;
+  color: rgba(33, 30, 27, 0.5);
+  font-size: 14px;
+}
+
+.admin-login {
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-login__form {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.15);
+  border-radius: 8px;
+  padding: 32px 28px;
+}
+
+.admin-login__title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.admin-login__label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-login__form input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-ink);
+}
+
+.admin-login__form input:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+}
+
+.admin-login__password-row {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-login__password-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-login__toggle-visibility {
+  flex: 0 0 auto;
+  padding: 0 14px;
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.admin-login__toggle-visibility:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+}
+
+.admin-login__remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(33, 30, 27, 0.75);
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.admin-login__remember input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-terracotta);
+  cursor: pointer;
+}
+
+.admin-login__submit {
+  margin-top: 8px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.admin-login__submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.admin-login__submit:hover {
+  background: var(--color-sienna);
+}
+
+.admin-login__error {
+  color: #b3261e;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Dashboard shell
+   ========================================================================== */
+
+.admin-dash {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+.admin-dash__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.admin-dash__header h1 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  margin: 0;
+}
+
+.admin-dash__header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-dash__toggle-advice,
+.admin-dash__logout {
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-dash__toggle-advice:hover,
+.admin-dash__logout:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+}
+
+/* Sage-tinted, matching the mobile "Vista compacta" toggle (client
+   request, 2026-09-22). */
+.admin-dash__logout {
+  background: rgba(166, 169, 79, 0.2);
+  border-color: rgba(166, 169, 79, 0.4);
+  color: #4d5424;
+}
+
+/* Mobile: title takes the full width, the 4 action buttons wrap into
+   a tidy 2x2 grid below it instead of squeezing into the same row
+   (client request, 2026-09-22 — "se ve raro"). */
+@media (max-width: 640px) {
+  .admin-dash__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .admin-dash__header-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-dash__toggle-advice,
+  .admin-dash__logout {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   Consejos de matrimonio
+   ========================================================================== */
+
+.admin-advice {
+  margin-top: 4px;
+}
+
+.admin-advice__loading,
+.admin-advice__empty {
+  color: rgba(33, 30, 27, 0.6);
+  font-size: 14px;
+}
+
+.admin-advice__error {
+  color: #b3261e;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.admin-advice__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-advice__item {
+  border-bottom: 1px solid rgba(33, 30, 27, 0.1);
+  padding-bottom: 14px;
+}
+
+.admin-advice__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.admin-advice__secreto {
+  margin: 0 0 6px;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.admin-advice__meta {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(33, 30, 27, 0.55);
+}
+
+/* ==========================================================================
+   Metrics
+   ========================================================================== */
+
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+@media (min-width: 640px) {
+  .admin-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .admin-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.admin-metric {
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.12);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-metric--wide {
+  grid-column: 1 / -1;
+}
+
+.admin-metric__value {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--color-terracotta);
+}
+
+.admin-metric__label {
+  font-size: 13px;
+  color: rgba(33, 30, 27, 0.65);
+}
+
+/* ==========================================================================
+   Controls: filters, search, sort
+   ========================================================================== */
+
+.admin-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-filter {
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-filter.is-active {
+  background: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+.admin-search input {
+  padding: 8px 12px;
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.admin-sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.admin-sort select {
+  padding: 6px 10px;
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* Mobile-only toggle between full cards and a compact name+status list
+   (client request, 2026-09-22). Hidden on desktop, where the table is
+   already compact. Own sage-tinted background (reusing the CONFIRMADO
+   status color) so it reads as a different kind of action from the
+   plain status filters next to it (client request, 2026-09-22). */
+.admin-view-toggle {
+  display: none;
+  border: 1px solid rgba(166, 169, 79, 0.4);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(166, 169, 79, 0.2);
+  color: #4d5424;
+}
+
+.admin-view-toggle:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+}
+
+@media (max-width: 720px) {
+  .admin-view-toggle {
+    display: inline-flex;
+    justify-content: center;
+  }
+
+  /* Not one scrollable row (client correction, 2026-09-22: "se salen
+     de la pantalla") — a fixed 3-column grid so the 4 status filters +
+     the view toggle land in two even rows (3 + 2) on any phone width. */
+  .admin-filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  .admin-filter,
+  .admin-filters .admin-view-toggle {
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 12px;
+  }
+}
+
+/* ==========================================================================
+   Table (desktop) / cards (mobile)
+   ========================================================================== */
+
+.admin-loading,
+.admin-empty {
+  color: rgba(33, 30, 27, 0.6);
+}
+
+.admin-error {
+  color: #b3261e;
+  font-weight: 600;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th {
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(33, 30, 27, 0.55);
+  padding: 8px 10px;
+  border-bottom: 2px solid rgba(33, 30, 27, 0.15);
+}
+
+.admin-table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(33, 30, 27, 0.1);
+  vertical-align: top;
+}
+
+.admin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-status--PENDIENTE {
+  background: rgba(33, 30, 27, 0.08);
+  color: var(--color-ink);
+}
+
+.admin-status--CONFIRMADO {
+  background: rgba(166, 169, 79, 0.2);
+  color: #4d5424;
+}
+
+.admin-status--NO_ASISTE {
+  background: rgba(226, 114, 122, 0.18);
+  color: #8a2d34;
+}
+
+.admin-table a.admin-phone {
+  color: var(--color-terracotta);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-edit-btn {
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-edit-btn:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+}
+
+/* Mobile: cards instead of a horizontally-scrolling table for the core
+   fields; the table itself is still reachable via horizontal scroll if
+   preferred, but cards are the primary mobile UX per the client's
+   "responsive cards or controlled horizontal scroll" requirement. */
+@media (max-width: 720px) {
+  .admin-table thead {
+    display: none;
+  }
+
+  .admin-table, .admin-table tbody, .admin-table tr, .admin-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-table tr {
+    background: var(--color-white);
+    border: 1px solid rgba(33, 30, 27, 0.12);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 10px 4px;
+  }
+
+  .admin-table td {
+    border-bottom: none;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: right;
+  }
+
+  .admin-table td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(33, 30, 27, 0.5);
+    font-weight: 700;
+    text-align: left;
+  }
+
+  /* Compact list: just name + status, tap the row to edit (client
+     request, 2026-09-22 — "no ver las cajas grandotas"). */
+  .admin-table-wrap.is-compact .admin-table tr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    cursor: pointer;
+  }
+
+  .admin-table-wrap.is-compact .admin-table td {
+    display: none;
+  }
+
+  .admin-table-wrap.is-compact .admin-table td.admin-td-nombre,
+  .admin-table-wrap.is-compact .admin-table td.admin-td-estado {
+    display: block;
+    padding: 0;
+  }
+
+  .admin-table-wrap.is-compact .admin-table td.admin-td-nombre::before,
+  .admin-table-wrap.is-compact .admin-table td.admin-td-estado::before {
+    content: none;
+  }
+
+  .admin-table-wrap.is-compact .admin-table td.admin-td-nombre {
+    font-weight: 600;
+    font-size: 15px;
+  }
+}
+
+/* ==========================================================================
+   Edit modal
+   ========================================================================== */
+
+.admin-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(33, 30, 27, 0.45);
+  z-index: 200;
+}
+
+.admin-modal__dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 201;
+  width: min(420px, 90vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: 28px 24px;
+}
+
+.admin-modal__dialog--wide {
+  width: min(560px, 90vw);
+}
+
+.admin-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 22px;
+  line-height: 1;
+  color: rgba(33, 30, 27, 0.5);
+}
+
+.admin-modal__close:hover {
+  color: var(--color-terracotta);
+}
+
+.admin-modal__title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+
+.admin-modal__name {
+  color: rgba(33, 30, 27, 0.6);
+  margin: 0 0 20px;
+}
+
+#adminEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#adminEditForm label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+#adminEditForm select,
+#adminEditForm input,
+#adminEditForm textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+  resize: vertical;
+}
+
+.admin-modal__error {
+  color: #b3261e;
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+
+.admin-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.admin-modal__cancel {
+  padding: 10px 18px;
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.admin-modal__save {
+  padding: 10px 18px;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.admin-modal__save:hover {
+  background: var(--color-sienna);
+}
+
+/* Edit/add guest modal: grouped fields + delete action */
+.admin-modal__group {
+  border: 1px solid rgba(33, 30, 27, 0.15);
+  border-radius: 8px;
+  padding: 4px 14px 14px;
+  margin: 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-modal__group legend {
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(33, 30, 27, 0.55);
+}
+
+.admin-modal__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.admin-modal__row label {
+  display: block;
+}
+
+.admin-modal__delete {
+  margin-right: auto;
+  padding: 10px 14px;
+  border: 1px solid #b3261e;
+  border-radius: 6px;
+  color: #b3261e;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.admin-modal__delete:hover {
+  background: #b3261e;
+  color: var(--color-white);
+}
+
+.admin-modal__dialog {
+  width: min(460px, 92vw);
+}
