@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chelo y Olivia</title>
+<meta name="theme-color" content="#FDFBF6" />
+
+<meta property="og:title" content="Chelo y Olivia — ¡Nos casamos!" />
+<meta property="og:description" content="Acompáñanos a celebrar en San Carlos, Sonora." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- TYPOGRAPHY TEST (client request, 2026-09-15): Parisienne for titles,
+     Cormorant for all body text, replacing Fraunces/Hubballi. Easy to
+     revert — see css/style.css's --font-display/--font-body and swap
+     this link back if she doesn't like it. -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Bump every ?v= below on any CSS/JS change — GitHub Pages/browsers
+     cache these aggressively, which caused a stale-CSS bug once already. -->
+<link rel="stylesheet" href="css/style.css?v=81" />
+</head>
+<body>
+
+<header class="site-header">
+  <a href="#cover" class="site-header__mark">C &amp; O</a>
+
+  <div class="site-header__right">
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Floating below the header, pinned to the right — client's request,
+       not part of the header bar itself. -->
+  <button class="lang-toggle" id="langToggle" aria-label="Switch language / Cambiar idioma">
+    <span class="lang-toggle__es is-active">ES</span><span class="lang-toggle__sep">/</span><span class="lang-toggle__en">EN</span>
+  </button>
+
+  <!--
+    Nav pruned per client request: "Inicio" is now the MB & JM logo (links
+    to #cover); Detalles and Cartas dropped from the menu (sections still
+    exist on the page, just not nav-linked); Consejo shows only an envelope
+    icon, matching the envelope artwork in that section.
+  -->
+  <nav class="site-nav" id="siteNav">
+    <ul class="site-nav__list">
+<!-- <li><a href="#itinerary" data-i18n="nav.itinerary">Itinerario</a></li> -->
+      <li><a href="#rsvp" class="is-rsvp" data-i18n="nav.rsvp">RSVP</a></li>
+      <li><a href="#hotels" data-i18n="nav.hotels">Hospedaje</a></li>
+      <li><a href="#dresscode" data-i18n="nav.dresscode">Dresscode</a></li>
+      <li><a href="#gifts" data-i18n="nav.gifts">Mesa de regalos</a></li>
+<!-- <li><a href="#gallery" data-i18n="nav.gallery">Galería</a></li> -->
+      <li><a href="#faq">FAQ</a></li>
+      <li>
+        <a href="#advice" class="site-nav__icon" aria-label="Secretos para un matrimonio feliz">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <!-- WhatsApp contact for questions, pre-filled message. Client's
+             number: +52 667 190 0428. -->
+        <a class="site-nav__icon" href="#faq" aria-label="Contacto pendiente" title="Contacto pendiente">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.36.101 11.943c0 2.105.549 4.16 1.595 5.974L0 24l6.335-1.652a11.882 11.882 0 0 0 5.71 1.447h.006c6.585 0 11.946-5.363 11.949-11.947 0-3.191-1.244-6.19-3.48-8.399" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <!-- Developer credit: same Lucide cube as the footer, deliberately
+             muted (light ink tone) so it half-blends into the header. -->
+        <a class="site-nav__icon site-nav__atlas" href="https://atlastechndesign.studio" target="_blank" rel="noopener" aria-label="Atlas Tech &amp; Design" title="Atlas Tech &amp; Design">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- 1. COVER ============================================================ -->
+  <section id="cover" class="section">
+    <h1 class="visually-hidden">Chelo y Olivia — sábado 13 de marzo de 2027, San Carlos, Sonora</h1>
+    <div class="cover__art">
+      <div class="image-placeholder cover__image-placeholder" role="img" aria-label="Imagen pendiente para Chelo y Olivia" data-i18n-aria-label="image.pendingAria">
+        <span data-i18n="image.pending">Imagen pendiente</span>
+        <strong>Chelo y Olivia</strong>
+      </div>
+      <p class="cover__names"><span class="cover__n1">Chelo</span> <span class="cover__amp">&amp;</span> <span class="cover__n2">Olivia</span></p>
+      <div class="cover__divider"></div>
+      <p class="cover__meta" data-i18n="cover.meta"><span class="cover__date">13 DE MARZO, 2027</span><span class="cover__dot"> &nbsp;&middot;&nbsp; </span><span class="cover__place">SAN CARLOS, SONORA</span></p>
+    </div>
+
+    <a class="cover__scroll" href="#details" aria-label="Seguir bajando">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- 2. DETAILS =========================================================== -->
+  <!--
+    2. DETAILS — content from client, fully bilingual via data-i18n (see
+    js/i18n.js "details.*" keys). Image/text order: Ceremonia is
+    image-left on desktop, Recepción is text-left — both collapse to
+    text-then-photo on mobile (client's explicit request), handled with
+    flex `order` in CSS rather than DOM reordering.
+  -->
+  <section id="details" class="section">
+    <div class="section-inner details__inner">
+      <p class="eyebrow" data-i18n="details.eyebrow">Detalles</p>
+      <h2 class="section-title" data-i18n="details.title">Ceremonia &amp; Fiesta</h2>
+
+      <div class="details__block details__block--image-left">
+        <div class="details__art">
+          <div class="image-placeholder" role="img" aria-label="Imagen pendiente para Chelo y Olivia" data-i18n-aria-label="image.pendingAria">
+            <span data-i18n="image.pending">Imagen pendiente</span>
+            <strong>Chelo y Olivia</strong>
+          </div>
+        </div>
+        <div class="details__text">
+          <h3 data-i18n="details.ceremonyTitle">Ceremonia</h3>
+          <p class="details__datetime" data-i18n="details.ceremonyDatetime">Sábado 13 de marzo de 2027 &middot; 3:00 p.m.</p>
+          <p class="details__venue" data-i18n="details.ceremonyVenue">Kite Club San Carlos<br />Boulevard Manlio Fabio Beltrones km. 19.7, Módulo 3<br />Algodones, 85506 San Carlos, Sonora</p>
+          <a class="details__map-link" href="https://www.google.com/maps/place/Kite+Club+San+Carlos/@27.9665665,-111.1150729,17z/data=!3m1!4b1!4m6!3m5!1s0x86cbd9aaa9b241d7:0x9d6cc9498abbbaa2!8m2!3d27.9665665!4d-111.112498!16s%2Fg%2F11kpqb19r1" target="_blank" rel="noopener" data-i18n="details.mapLink">Ver en Google Maps →</a>
+          <p class="details__desc" data-i18n="details.ceremonyDesc"></p>
+        </div>
+      </div>
+
+      <div class="details__block">
+        <div class="details__art">
+          <div class="image-placeholder" role="img" aria-label="Imagen pendiente para Chelo y Olivia" data-i18n-aria-label="image.pendingAria">
+            <span data-i18n="image.pending">Imagen pendiente</span>
+            <strong>Chelo y Olivia</strong>
+          </div>
+        </div>
+        <div class="details__text">
+          <h3 data-i18n="details.receptionTitle">Fiesta</h3>
+          <p class="details__datetime" data-i18n="details.receptionDatetime">Sábado 13 de marzo de 2027 &middot; 4:00 p.m.</p>
+          <p class="details__venue" data-i18n="details.receptionVenue">Kite Club San Carlos<br />Boulevard Manlio Fabio Beltrones km. 19.7, Módulo 3<br />Algodones, 85506 San Carlos, Sonora</p>
+          <a class="details__map-link" href="https://www.google.com/maps/place/Kite+Club+San+Carlos/@27.9665665,-111.1150729,17z/data=!3m1!4b1!4m6!3m5!1s0x86cbd9aaa9b241d7:0x9d6cc9498abbbaa2!8m2!3d27.9665665!4d-111.112498!16s%2Fg%2F11kpqb19r1" target="_blank" rel="noopener" data-i18n="details.mapLink">Ver en Google Maps →</a>
+          <p class="details__desc" data-i18n="details.receptionDesc"></p>
+        </div>
+      </div>
+
+      <p class="details__map-disclaimer" data-i18n="details.mapDisclaimer"></p>
+    </div>
+  </section>
+
+  <!-- 3. ITINERARY — hidden for now per client request (2026-09-02), not
+       ready yet. Restore this block + the nav link above when there's
+       real day-by-day content.
+  <section id="itinerary" class="section section--stub">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="itinerary.eyebrow">Itinerario</p>
+      <h2 class="section-title" data-i18n="itinerary.title">Día 01 &amp; Día 02</h2>
+      <p class="stub-note" data-i18n="itinerary.stub">Pendiente: agenda de cada día y qué invitados asisten a cuál.</p>
+    </div>
+  </section>
+  -->
+
+  <section id="rsvp" class="section">
+    <div class="section-inner rsvp__inner">
+      <p class="eyebrow" data-i18n="rsvp.eyebrow">RSVP</p>
+      <h2 class="section-title" data-i18n="rsvp.title">Confirma tu asistencia</h2>
+      <p class="rsvp__deadline" data-i18n="rsvp.deadline">Agradeceremos confirmar tu asistencia a más tardar el <span class="missing-info">1 de diciembre (año por confirmar)</span>.</p>
+      <p class="missing-info" data-i18n="rsvp.pending">El sistema de confirmación está pendiente de configuración.</p>
+    </div>
+  </section>
+
+
+  <!--
+    5. LETTERS — hidden for now per client request (2026-09-02), same
+    reason as before (Canva design not finished) plus now hidden from
+    view entirely, not just stubbed. Restore when the letter images
+    exist — see project memory for the fuller history on this section.
+  <section id="letters" class="section section--stub">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="letters.eyebrow">Cartas</p>
+      <h2 class="section-title" data-i18n="letters.title">Para los novios</h2>
+      <p class="stub-note" data-i18n="letters.stub">Pendiente: diseño final de cada carta (hecho en Canva por la pareja).</p>
+    </div>
+  </section>
+  -->
+  <!-- 6. HOTELS ============================================================= -->
+  <section id="hotels" class="section">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="hotels.eyebrow">Hospedaje</p>
+      <h2 class="section-title" data-i18n="hotels.title">Dónde quedarse</h2>
+      <div class="image-placeholder hotels__art" role="img" aria-label="Imagen pendiente para Chelo y Olivia" data-i18n-aria-label="image.pendingAria">
+        <span data-i18n="image.pending">Imagen pendiente</span>
+        <strong>Chelo y Olivia</strong>
+      </div>
+      <p class="missing-info" data-i18n="hotels.pending">Pendiente: confirmar los dos hoteles recomendados.</p>
+    </div>
+  </section>
+
+  <!-- 7. DRESSCODE (was "Belleza & Estilo") ================================= -->
+  <!--
+    7. DRESSCODE — content from client, fully bilingual via data-i18n
+    (js/i18n.js "dresscode.*" keys). Pinterest link is her real
+    moodboard, invite-coded — don't strip the query params.
+  -->
+  <section id="dresscode" class="section">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="dresscode.eyebrow">Dresscode</p>
+      <h2 class="section-title" data-i18n="dresscode.title">Dresscode</h2>
+
+      <div class="image-placeholder dresscode__art" role="img" aria-label="Imagen pendiente para Chelo y Olivia" data-i18n-aria-label="image.pendingAria">
+        <span data-i18n="image.pending">Imagen pendiente</span>
+        <strong>Chelo y Olivia</strong>
+      </div>
+
+      <div class="dresscode__group">
+        <h3 class="dresscode__label" data-i18n="dresscode.womenLabel">Mujeres &middot; Formal de playa</h3>
+        <p data-i18n="dresscode.womenDesc">Vestidos largos o midi, telas ligeras, colores y estampados que se sientan elegantes, frescos y perfectos para celebrar junto al mar.</p>
+      </div>
+
+      <div class="dresscode__group">
+        <h3 class="dresscode__label" data-i18n="dresscode.menLabel">Hombres &middot; Traje formal</h3>
+        <p data-i18n="dresscode.menDesc">Traje regular o de lino, acompañado de camisa y zapatos acordes a una celebración formal en la playa.</p>
+      </div>
+
+      <p class="dresscode__note" data-i18n="dresscode.note">Las guayaberas son muy lindas —pero esta vez, no forman parte del dress code de la boda.</p>
+
+      <div class="dresscode__moodboard">
+        <p class="dresscode__moodboard-q" data-i18n="dresscode.moodboardQ">¿Todavía tienes dudas sobre qué ponerte?</p>
+        <p data-i18n="dresscode.moodboardText">Échale un vistazo a nuestro moodboard en Pinterest para inspirarte y conocer mejor el estilo que imaginamos para este día.</p>
+        <p class="missing-info" data-i18n="dresscode.moodboardLink">Enlace del moodboard pendiente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. GIFTS ============================================================== -->
+  <!--
+    8. GIFTS — content only, per client instruction: NO modificar imágenes
+    de esta sección (none exist yet anyway). Transfer data from
+    DATOS_REGALO sheet. "Copiar" buttons copy the raw account/phone
+    digits (no spaces) so they paste cleanly into banking apps; feedback
+    text swaps to "Copiado"/"Copied" briefly via js/main.js.
+  -->
+  <section id="gifts" class="section">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="gifts.eyebrow">Regalos</p>
+      <h2 class="section-title" data-i18n="gifts.title">Mesa de regalos</h2>
+      <p class="gifts__text" data-i18n="gifts.text">No tendremos mesa de regalos. Para nosotros, el mejor regalo es compartir este día tan especial con ustedes. Si aun así desean darnos algo, pueden hacernos una transferencia bancaria.</p>
+
+      <p class="missing-info" data-i18n="gifts.pending">Datos de transferencia y montos sugeridos pendientes de confirmar.</p>
+    </div>
+  </section>
+
+  <!-- 9. GALLERY — removed for now per client request (2026-09-02), not
+       ready yet. Restore this block + the nav link above when she has
+       the final photo set.
+  <section id="gallery" class="section section--stub">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="gallery.eyebrow">Galería</p>
+      <h2 class="section-title" data-i18n="gallery.title">Nuestros momentos</h2>
+      <p class="stub-note" data-i18n="gallery.stub">Pendiente: set final de fotos de compromiso.</p>
+    </div>
+  </section>
+  -->
+
+  <section id="advice" class="section advice">
+    <div class="section-inner">
+      <h2 class="section-title" data-i18n="advice.title">Consejos para Chelo y Olivia</h2>
+      <div class="advice__inner">
+        <div class="image-placeholder advice__art" role="img" aria-label="Imagen pendiente para Chelo y Olivia" data-i18n-aria-label="image.pendingAria">
+          <span data-i18n="image.pending">Imagen pendiente</span>
+          <strong>Chelo y Olivia</strong>
+        </div>
+        <div class="advice__panel">
+          <p class="advice__question" data-i18n="advice.question">¿Cuál es ese secreto que hace que el amor dure y la amistad crezca con los años?</p>
+          <p class="advice__prompt" data-i18n="advice.prompt">Compártenos uno o varios consejos que, para ti, sean clave para construir un matrimonio feliz, divertido y lleno de complicidad.</p>
+
+          <div class="advice__form" aria-describedby="advicePending">
+            <textarea class="advice__textarea" rows="6" data-i18n-placeholder="advice.placeholder" placeholder="Escribe aquí..." disabled></textarea>
+            <input class="advice__signature" type="text" data-i18n-placeholder="advice.signature" placeholder="Firma (tu nombre)" disabled />
+            <label class="advice__anon">
+              <input type="checkbox" disabled />
+              <span data-i18n="advice.anon">Anónimo</span>
+            </label>
+            <button type="button" class="advice__submit" disabled data-i18n="advice.submit">Enviar</button>
+          </div>
+          <p class="missing-info advice__pending" id="advicePending" data-i18n="advice.pending">El espacio para consejos está listo; el envío está pendiente de configurar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. FAQ ================================================================= -->
+  <!--
+    10. FAQ — content from faq_boda.md, fully bilingual via data-i18n
+    (js/i18n.js "faq.q1"/"faq.a1" etc — translate carefully, this
+    includes financial/address details). Collapsible via native
+    <details>/<summary>, no JS needed; chevron rotates via the [open]
+    CSS selector. Client asked for darker questions, muted answers —
+    see .faq__question / .faq__answer.
+  -->
+  <section id="faq" class="section">
+    <div class="section-inner">
+      <p class="eyebrow" data-i18n="faq.eyebrow">Preguntas</p>
+      <h2 class="section-title" data-i18n="faq.title">Preguntas frecuentes</h2>
+
+      <div class="faq__list">
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q1">¿A qué hora es la ceremonia y la recepción?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a1">
+            <p>La ceremonia comienza a las 3:00 p.m. y la fiesta a las 4:00 p.m. en Kite Club San Carlos, Boulevard Manlio Fabio Beltrones km. 19.7, Módulo 3, Algodones, 85506 San Carlos, Sonora.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q2">¿En qué hotel me puedo quedar?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a2">
+            <p class="missing-info">Pendiente: la organizadora sugirió dos hoteles; falta confirmar sus nombres.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q3">¿Cómo llego del aeropuerto a la zona de la boda?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a3">
+            <p>Si llegas al Aeropuerto Internacional de Hermosillo, Sonora, sugerimos rentar un vehículo para trasladarte a San Carlos. El tiempo aproximado de traslado es de 1 hora con 10 minutos.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q4">¿Puedo dar un regalo en efectivo o transferencia?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a4">
+            <p>Sí. <span class="missing-info">Los datos de la cuenta bancaria están pendientes de confirmar.</span></p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q5">¿Puedo llevar niños?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a5">
+            <p>Nos encantan las niñas y los niños, pero en esta ocasión únicamente podrán acompañarnos los menores de nuestra familia nuclear.</p>
+            <p>Gracias por ayudarnos a mantener este día tan especial tal como lo hemos planeado.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q6">¿Hay fecha límite para confirmar asistencia (RSVP)?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a6">
+            <p>Agradeceremos confirmar tu asistencia a más tardar el <span class="missing-info">1 de diciembre (año por confirmar)</span>. Después de esta fecha, asumiremos que no podrás acompañarnos y no podremos garantizar tu lugar.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q7">¿Qué tipo de comida se servirá?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a7">
+            <p>Nuestro menú incluirá ingredientes del mar. <span class="missing-info">El menú completo está pendiente de confirmar.</span></p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q8">¿A qué hora termina el evento?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a8">
+            <p>La celebración durará aproximadamente 8 horas y la música terminará a las 11:30 p.m. para respetar las normas del establecimiento y de la playa.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q9">¿Hay estacionamiento en la recepción?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a9">
+            <p>Hay un estacionamiento privado de varios negocios aledaños al establecimiento. <span class="missing-info">El costo por vehículo está pendiente de confirmar.</span></p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q10">¿Puedo llevar acompañante (+1)?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a10">
+            <p>Si tu invitación incluye un +1, puedes venir con acompañante. Si tu invitación es individual, significa que hemos reservado ese lugar especialmente para ti.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span data-i18n="faq.q12">¿Qué clima hace en marzo?</span>
+            <svg class="faq__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="faq__answer" data-i18n="faq.a12">
+            <p>Día: máxima de 24–25 °C (aprox.). Noche: mínima de 13–16 °C (aprox.). Te recomendamos llevar un saco, suéter o chal para disfrutar cómodamente.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Discreet credit, client (Atlas Tech & Design) request 2026-09-21.
+     Cube icon is Lucide's "box" so the Atlas logo file isn't needed. -->
+<footer class="site-footer">
+  <a class="site-footer__link" href="https://atlastechndesign.studio" target="_blank" rel="noopener">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+    <span data-i18n="footer.credit">Diseño y desarrollo por Atlas Tech &amp; Design</span>
+  </a>
+</footer>
+
+<script src="js/i18n.js?v=22"></script>
+<script src="js/main.js?v=10"></script>
+</body>
+</html>

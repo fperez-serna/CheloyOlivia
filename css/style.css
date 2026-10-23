@@ -1,0 +1,1531 @@
+/* ==========================================================================
+   Mirna & José Miguel — wedding site
+
+   Palette replaced (2026-09-02) with Mirna's own corrected colors — the
+   original terracotta/sienna/sage/bone/ink from the brief is gone.
+   Variable NAMES kept as-is so nothing else in this file needed to
+   change, but they now hold:
+     --color-terracotta -> Coral rosado  #E2727A (hero, arcos)
+     --color-sienna      -> Naranja tostado #D9720F (acento, flores —
+                             used here for hover/active, the deeper/
+                             richer shift down from coral)
+     --color-sage         -> Oliva fresca #A6A94F (vestido, follaje)
+     --color-bone          -> Marfil claro #FBF6EC (base/fondo — aclarado
+                             2026-09-15 a pedido de la clienta)
+     --color-ink            -> Vino profundo #4A1F2B (sombra, texto, noche)
+   ========================================================================== */
+
+:root {
+  --color-terracotta: #E2727A;
+  --color-sienna:     #D9720F;
+  --color-sage:       #A6A94F;
+  --color-bone:       #FDFBF6;
+  --color-ink:        #4A1F2B;
+
+  --color-white: #FFFFFF;
+
+  /* Two-font system, per client decision: Fraunces (the original brief's
+     display serif, back after a round of trying handwriting fonts for
+     titles) for titles/headings, Hubballi for body/logistics text. Body
+     sized up from a typical 16px baseline (20px) since Hubballi's
+     handwriting-style letterforms read smaller than a plain sans at the
+     same pixel size. */
+  /* TYPOGRAPHY TEST (client request, 2026-09-15) — was 'Fraunces' /
+     'Hubballi'. Revert these two lines (and the Google Fonts <link> in
+     index.html) if she doesn't like it. */
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body: 'Cormorant', serif;
+  --font-script: 'Cormorant', serif;
+
+  --nav-height: 64px;
+  --section-pad-y: clamp(40px, 6vh, 72px);
+  --section-pad-x: clamp(20px, 6vw, 64px);
+
+  --max-content-width: 720px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Guards against any element whose own class also declares `display`
+   (e.g. flex/grid containers) silently overriding the `hidden`
+   attribute's default `display: none` — author styles otherwise beat
+   the UA stylesheet even when `hidden` is set via JS. */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  margin: 0;
+}
+
+a {
+  color: var(--color-terracotta);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-sienna);
+}
+
+h1, h2, h3 {
+  font-weight: 500;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+/* Main titles (h1/h2 — section titles, hero names) stay in the
+   display script font; h3-level subtitles and subtitle-like elements
+   use the body serif at a real bold weight instead (client request,
+   2026-09-15). */
+h1, h2 {
+  font-family: var(--font-display);
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+/* Avoids orphan words alone on a paragraph's last line (client
+   request, 2026-09-15) — browsers without support just wrap normally,
+   no harm either way. */
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+/*
+  Nav-click landing spot: previously stacked scroll-padding-top (on html)
+  AND scroll-margin-top (on .section) on top of the section's own
+  --section-pad-y (up to 120px), so a jump could land ~200px+ below the
+  header before any heading was visible — read as "starts from the
+  middle of the screen". Cancel most of that padding out of the anchor
+  offset so the heading sits right under the sticky header instead.
+*/
+.section {
+  padding: var(--section-pad-y) var(--section-pad-x);
+  scroll-margin-top: calc(var(--nav-height) - var(--section-pad-y));
+}
+
+.section-inner {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(30px, 5.5vw, 44px);
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+
+/* Centered titles and text from RSVP onward (client request,
+   2026-09-15) — Cover/Names banner stay as they were. */
+#rsvp .section-inner,
+#hotels .section-inner,
+#dresscode .section-inner,
+#gifts .section-inner,
+#advice .section-inner,
+#faq .section-inner {
+  text-align: center;
+}
+
+/* Details keeps its side-by-side ceremony/reception layout (left-
+   aligned prose), but the section's own eyebrow+title are centered
+   like the rest (client request, 2026-09-15). */
+#details > .section-inner > .eyebrow,
+#details > .section-inner > .section-title {
+  text-align: center;
+}
+
+.tbd {
+  outline: 2px dashed var(--color-sage);
+  outline-offset: 4px;
+  background: rgba(138, 143, 110, 0.12);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.missing-info {
+  color: #B42318;
+  font-weight: 700;
+}
+
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 160px;
+  aspect-ratio: 16 / 9;
+  padding: 20px;
+  border: 2px dashed #B42318;
+  background: rgba(180, 35, 24, 0.06);
+  color: #B42318;
+  text-align: center;
+}
+
+.image-placeholder strong {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Header / anchor nav
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  background: var(--color-bone);
+  border-bottom: 1px solid rgba(33, 30, 27, 0.08);
+}
+
+@media (min-width: 480px) {
+  .site-header {
+    padding: 0 var(--section-pad-x);
+  }
+}
+
+.site-header__mark {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.site-header__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lang-toggle {
+  position: fixed;
+  top: calc(var(--nav-height) + 10px);
+  right: 16px;
+  z-index: 98;
+  background: var(--color-bone);
+  border: 1px solid rgba(33, 30, 27, 0.2);
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+@media (min-width: 480px) {
+  .lang-toggle {
+    right: var(--section-pad-x);
+  }
+}
+
+.lang-toggle span {
+  opacity: 0.4;
+}
+
+.lang-toggle span.is-active {
+  opacity: 1;
+  color: var(--color-terracotta);
+}
+
+.lang-toggle__sep {
+  opacity: 0.3;
+  margin: 0 2px;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-ink);
+}
+
+.site-nav {
+  position: fixed;
+  inset: var(--nav-height) 0 0 0;
+  background: var(--color-bone);
+  transform: translateY(-110%);
+  transition: transform 0.28s ease;
+  overflow-y: auto;
+  z-index: 99;
+}
+
+.site-nav.is-open {
+  transform: translateY(0);
+}
+
+.site-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 24px var(--section-pad-x) 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.site-nav__list a {
+  display: block;
+  padding: 14px 4px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--color-ink);
+  border-bottom: 1px solid rgba(33, 30, 27, 0.08);
+}
+
+.site-nav__list a.is-rsvp {
+  color: var(--color-terracotta);
+}
+
+.site-nav__list a:hover {
+  color: var(--color-sienna);
+}
+
+@media (min-width: 860px) {
+  .nav-toggle { display: none; }
+
+  .site-nav {
+    position: static;
+    inset: auto;
+    transform: none;
+    background: none;
+    overflow: visible;
+  }
+
+  .site-nav__list {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .site-nav__list a {
+    padding: 8px 2px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+}
+
+/* ==========================================================================
+   Cover
+   ========================================================================== */
+
+/* First screen: the cover fills the viewport below the sticky header and
+   its content is centered, so the next section never peeks in (client
+   request 2026-09-21). svh (small viewport height) so mobile browser
+   toolbars don't push it off-screen; vh is the fallback. */
+#cover {
+  position: relative;
+  background: var(--color-bone);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--nav-height));
+  min-height: calc(100svh - var(--nav-height));
+  padding-bottom: 64px;
+  /* The sticky header already occupies the top 64px in flow, so the cover
+     sits at offsetTop = nav-height; a margin of the same size makes the
+     #cover anchor (the MB & JM home link) land at scrollY = 0 instead of
+     scrolling the group ~46px up under the header. */
+  scroll-margin-top: var(--nav-height);
+}
+
+/*
+  No cropping, no forced aspect ratio — client was explicit ("no
+  deformes la imagen", "tal cual como la encuentras en la carpeta"):
+  natural height, whole image always visible. Contained and centered.
+  max-width 1000px (~ the source image's native width) means mobile
+  is unaffected (viewport is already narrower than that — this is the
+  size the client said looked "perfecto" on her phone) while desktop
+  scales up to use the available space instead of sitting tiny in the
+  middle of the screen.
+*/
+.cover__art {
+  position: relative;
+  width: 100%;
+  /* Also capped by viewport height so art + names + date always fit the
+     first screen on short desktop windows (stack is ~0.89x its width).
+     This container sizes the text below (cqw units) — keep it at its
+     original size so the names/date stay their original size; only the
+     image itself is rendered smaller, via .cover__art-img. */
+  max-width: min(900px, calc((100vh - 220px) / 0.89));
+  max-width: min(900px, calc((100svh - 220px) / 0.89));
+  container-type: inline-size;
+  /* Phones: nudged up so the group reads as centered on screen (the
+     art has empty space on top and the scroll cue sits below). Eased
+     up less than before (was -8vh) so the names sit at the vertical
+     center of the first screen, not above it (client request,
+     2026-09-22). */
+  transform: translateY(clamp(-36px, -4vh, -14px));
+}
+
+/* Client asked (2026-09-22) for the illustration a bit smaller than its
+   original full-width size, without shrinking the names/date — so only
+   this inner wrapper narrows, the outer .cover__art (and the cqw-sized
+   text below it) stays at its original footprint. */
+.cover__art-img {
+  width: 78%;
+  margin: 0 auto;
+}
+
+.cover__image-placeholder {
+  width: 78%;
+  margin: 0 auto;
+}
+
+/* Text sits over the empty corners of the artwork; positions are
+   percentages of the art and font sizes are container-width units, so
+   everything scales together (min sizes keep it readable on phones). */
+/* Below the artwork, top to bottom: the names on one big line (nearly the
+   flowers' width), a short terracotta divider, then date/place. Sizes are
+   container-width units so it all scales with the art (min sizes keep
+   phones readable). */
+.cover__names {
+  margin: clamp(4px, 1.5cqw, 14px) 0 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 8.4cqw, 78px);
+  line-height: 1.1;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.cover__divider {
+  width: clamp(36px, 6cqw, 60px);
+  height: 2px;
+  background: var(--color-terracotta);
+  margin: clamp(12px, 2.8cqw, 24px) auto;
+}
+
+.cover__meta {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(11px, 2.4cqw, 22px);
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.cover__art-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Generic stub sections (placeholder until content lands)
+   ========================================================================== */
+
+.section--stub {
+  border-top: 1px solid rgba(33, 30, 27, 0.08);
+}
+
+.section--stub .section-title {
+  color: var(--color-ink);
+}
+
+.stub-note {
+  font-size: 15px;
+  color: var(--color-sienna);
+}
+
+/* Letters section content is designed entirely in Canva by the couple —
+   see index.html §5 comment. It renders as a plain .section--stub until
+   the finished images are dropped in. */
+
+/* ==========================================================================
+   Advice / "Consejo para el matrimonio" — envelope art (client's Canva
+   illustration) + submission form, side by side on wide screens, stacked
+   on mobile.
+   ========================================================================== */
+
+.advice__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  text-align: center;
+  margin-top: 24px;
+}
+
+@media (min-width: 720px) {
+  .advice__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 56px;
+  }
+}
+
+.advice__art {
+  flex: 0 0 auto;
+  width: min(380px, 85vw);
+  aspect-ratio: 3 / 4;
+}
+
+.advice__art img {
+  width: 100%;
+  height: auto;
+}
+
+.advice__panel {
+  width: 100%;
+  max-width: 480px;
+}
+
+.advice__question {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--color-terracotta);
+  margin: 16px 0 0;
+}
+
+.advice__prompt {
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 12px 0 28px;
+}
+
+.advice__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.advice__textarea,
+.advice__signature {
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-ink);
+  resize: vertical;
+}
+
+.advice__textarea:focus,
+.advice__signature:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+}
+
+.advice__anon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.advice__anon input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-terracotta);
+  cursor: pointer;
+}
+
+.advice__submit {
+  align-self: flex-start;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  padding: 12px 32px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.advice__submit:hover {
+  background: var(--color-sienna);
+}
+
+.advice__form :disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.advice__pending {
+  margin-top: 16px;
+}
+
+.advice__thanks {
+  font-size: 18px;
+  color: var(--color-sienna);
+}
+
+.advice__error {
+  color: var(--color-terracotta);
+  font-weight: 600;
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+@media (min-width: 720px) {
+  .advice__form {
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   RSVP — search-first flow (§4/§8)
+   ========================================================================== */
+
+.rsvp__inner {
+  text-align: center;
+}
+
+.rsvp__banner {
+  width: 100%;
+  max-width: 900px;
+  margin: 40px auto 0;
+}
+
+.rsvp__banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.rsvp__deadline {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-sienna);
+  margin: 4px 0 0;
+}
+
+.rsvp__prompt {
+  font-size: 16px;
+  margin: 8px 0 20px;
+}
+
+.rsvp__search {
+  max-width: 480px;
+  margin: 0 auto 32px;
+}
+
+.rsvp__search-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .rsvp__search-row {
+    flex-direction: row;
+  }
+}
+
+#rsvpSearchInput {
+  flex: 1;
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-ink);
+}
+
+#rsvpSearchInput:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+}
+
+#rsvpSearchBtn {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#rsvpSearchBtn:hover {
+  background: var(--color-sienna);
+}
+
+.rsvp__search-result {
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--color-sienna);
+}
+
+.rsvp__search-result p {
+  margin: 0 0 6px;
+}
+
+.rsvp__result-name {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.rsvp__match-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.2);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.rsvp__match-btn:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+}
+
+.rsvp__form {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: left;
+}
+
+.rsvp__field legend,
+.rsvp__field > label:first-child {
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.rsvp__field {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rsvp__field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.rsvp__field input[type="checkbox"],
+.rsvp__field input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-terracotta);
+  cursor: pointer;
+}
+
+.rsvp__field select {
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.rsvp__kids-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  margin: 14px 0 0;
+  cursor: pointer;
+}
+
+.rsvp__kids-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-terracotta);
+  cursor: pointer;
+}
+
+.rsvp__submit {
+  align-self: center;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  padding: 12px 32px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rsvp__submit:hover {
+  background: var(--color-sienna);
+}
+
+.rsvp__thanks {
+  font-size: 18px;
+  color: var(--color-sienna);
+}
+
+.rsvp__actions {
+  max-width: 480px;
+  margin: 24px auto 0;
+  text-align: left;
+}
+
+.rsvp__status {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.rsvp__saving {
+  color: var(--color-sienna);
+  text-align: center;
+}
+
+.rsvp__error {
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+.rsvp__btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 420px) {
+  .rsvp__btn-row {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.rsvp__btn {
+  padding: 12px 28px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.rsvp__btn--yes {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+.rsvp__btn--yes:hover {
+  background: var(--color-sienna);
+}
+
+.rsvp__btn--no {
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.25);
+  color: var(--color-ink);
+}
+
+.rsvp__btn--no:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+}
+
+.rsvp__btn--confirm {
+  display: block;
+  margin: 16px auto 0;
+  background: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+.rsvp__btn--confirm:hover {
+  background: var(--color-sienna);
+}
+
+.rsvp__btn--change {
+  display: block;
+  margin: 4px auto 0;
+  color: var(--color-terracotta);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.rsvp__btn--change:hover {
+  color: var(--color-sienna);
+}
+
+/* ==========================================================================
+   Hotels — full-bleed photo strip + popup (name/phone/map) per hotel
+   ========================================================================== */
+
+.hotels__instruction {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--color-terracotta);
+  margin: 10px 0 4px;
+}
+
+.hotels__intro {
+  font-size: 15px;
+  color: var(--color-sienna);
+  margin: 0 0 24px;
+}
+
+.hotels__art {
+  position: relative;
+  margin: 40px auto 0;
+}
+
+/* Full width of the actual viewport on mobile ("que ocupe toda la
+   pantalla del cel") — breaks out of .section-inner's max-width and
+   .section's own side padding via the classic negative-margin trick.
+   Desktop reverts to a normal, contained, centered size. */
+@media (max-width: 719px) {
+  .hotels__art {
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+}
+
+@media (min-width: 720px) {
+  .hotels__art {
+    width: 100%;
+    max-width: 520px;
+  }
+}
+
+.hotels__art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Invisible click targets over each hotel photo — see the index.html
+   comment above them for how top/height were derived. left/width are
+   the same 0%/100% for every row so they're set once here instead of
+   per button. No hover/focus highlight — client wants these invisible;
+   the `title` attribute gives a native tooltip on desktop hover instead. */
+.hotels__hotspot {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Hotel popup
+   ========================================================================== */
+
+.hotel-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(33, 30, 27, 0.5);
+  z-index: 199;
+}
+
+.hotel-modal__dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  background: var(--color-bone);
+  border-radius: 4px;
+  padding: 28px;
+  width: min(90vw, 480px);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.hotel-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: var(--color-ink);
+  padding: 6px;
+}
+
+.hotel-modal__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0 32px 4px 0;
+}
+
+.hotel-modal__time {
+  font-size: 14px;
+  color: var(--color-sienna);
+  margin: 0 0 16px;
+}
+
+.hotel-modal__name a {
+  color: var(--color-ink);
+}
+
+.hotel-modal__name a:hover {
+  color: var(--color-terracotta);
+}
+
+.hotel-modal__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-terracotta);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.hotel-modal__phone:hover {
+  color: var(--color-sienna);
+}
+
+.hotel-modal__map {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hotel-modal__map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ==========================================================================
+   FAQ — native <details>/<summary> accordion, no JS needed
+   ========================================================================== */
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.faq__item {
+  border-bottom: 1px solid rgba(33, 30, 27, 0.15);
+}
+
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 4px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq__chevron {
+  flex-shrink: 0;
+  color: var(--color-terracotta);
+  transition: transform 0.2s ease;
+}
+
+.faq__item[open] .faq__chevron {
+  transform: rotate(180deg);
+}
+
+.faq__answer {
+  padding: 0 4px 20px;
+  color: rgba(33, 30, 27, 0.62);
+  line-height: 1.6;
+  /* #faq .section-inner centers everything by default (client request,
+     2026-09-15); the question stays unaffected since it's a flex row,
+     but the answer body is plain block text and inherited that
+     centering. Left-aligned instead (client request, 2026-09-24). */
+  text-align: left;
+}
+
+.faq__answer p {
+  margin: 0 0 12px;
+}
+
+.faq__answer p:last-child {
+  margin-bottom: 0;
+}
+
+.faq__answer ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+
+.faq__answer a {
+  color: var(--color-terracotta);
+}
+
+.faq__answer strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.faq__weather-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.faq__weather-row svg {
+  flex-shrink: 0;
+  color: var(--color-terracotta);
+}
+
+/* ==========================================================================
+   Dresscode
+   ========================================================================== */
+
+.dresscode__art {
+  width: 100%;
+  max-width: 640px;
+  margin: 8px auto 32px;
+}
+
+.dresscode__art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dresscode__group {
+  margin-bottom: 24px;
+}
+
+.dresscode__label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-terracotta);
+  margin: 0 0 6px;
+}
+
+.dresscode__group p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.dresscode__note {
+  font-style: italic;
+  color: rgba(33, 30, 27, 0.62);
+  margin: 24px 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(33, 30, 27, 0.15);
+}
+
+.dresscode__moodboard {
+  margin-top: 28px;
+}
+
+.dresscode__moodboard-q {
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.dresscode__moodboard p {
+  line-height: 1.6;
+}
+
+.dresscode__pinterest {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+.dresscode__pinterest:hover {
+  color: var(--color-sienna);
+}
+
+/* ==========================================================================
+   Gifts / Mesa de regalos — content-only cards, no imagery (client's
+   explicit instruction: no modificar imágenes de esta sección)
+   ========================================================================== */
+
+.gifts__text {
+  line-height: 1.6;
+  color: rgba(33, 30, 27, 0.72);
+  margin: 0 0 28px;
+}
+
+.gifts__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 560px) {
+  .gifts__cards {
+    flex-direction: row;
+  }
+}
+
+.gifts__card {
+  flex: 1;
+  background: var(--color-white);
+  border: 1px solid rgba(33, 30, 27, 0.15);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.gifts__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 19px;
+  margin: 0 0 4px;
+  color: var(--color-ink);
+}
+
+.gifts__bank {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+  margin: 0 0 10px;
+}
+
+.gifts__account {
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  margin: 0 0 16px;
+  word-break: break-word;
+}
+
+.gifts__copy {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.gifts__copy:hover {
+  background: var(--color-sienna);
+}
+
+.gifts__copy.is-copied {
+  background: var(--color-sage);
+}
+
+/* ==========================================================================
+   Details — Ceremonia & Recepción
+   ========================================================================== */
+
+.details__inner {
+  max-width: 900px;
+}
+
+.details__block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+/* Mobile: text always first, photo below — client's explicit request,
+   regardless of which side the image sits on at desktop width. */
+.details__art {
+  order: 2;
+}
+
+.details__text {
+  order: 1;
+}
+
+/* Ceremonia/Recepción text centered on mobile only (client request,
+   2026-09-15) — desktop keeps the left-aligned side-by-side layout. */
+@media (max-width: 719px) {
+  .details__text {
+    text-align: center;
+  }
+}
+
+.details__art {
+  width: 100%;
+}
+
+.details__art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.details__text h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.details__datetime {
+  color: var(--color-terracotta);
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.details__venue {
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.details__desc {
+  line-height: 1.6;
+  color: rgba(33, 30, 27, 0.72);
+  margin: 0;
+}
+
+.details__map-link {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.details__map-disclaimer {
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(33, 30, 27, 0.55);
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(33, 30, 27, 0.15);
+}
+
+@media (min-width: 720px) {
+  .details__block {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .details__block .details__art,
+  .details__block .details__text {
+    flex: 1;
+  }
+
+  /* Ceremonia: image left, text right on desktop (only block that
+     differs from the mobile order — Recepción's text-left already
+     matches the mobile default, see .details__art/.details__text above). */
+  .details__block--image-left .details__art {
+    order: 1;
+  }
+
+  .details__block--image-left .details__text {
+    order: 2;
+  }
+}
+
+/* ==========================================================================
+   Footer credit — small and discreet
+   ========================================================================== */
+
+.site-footer {
+  padding: 20px var(--section-pad-x) 28px;
+  text-align: center;
+  border-top: 1px solid rgba(33, 30, 27, 0.08);
+}
+
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: rgba(33, 30, 27, 0.78);
+}
+
+.site-footer__link:hover,
+.site-footer__link:focus {
+  color: var(--color-terracotta);
+}
+
+/* Atlas Tech & Design cube in the nav: a light tone of the header ink,
+   so it half-blends in; terracotta on hover/focus. */
+.site-nav__list a.site-nav__atlas {
+  color: #DCD3D6;
+}
+
+.site-nav__list a.site-nav__atlas:hover,
+.site-nav__list a.site-nav__atlas:focus {
+  color: var(--color-terracotta);
+}
+
+/* Blinking scroll cue at the bottom of the cover */
+.cover__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 8px;
+  color: var(--color-terracotta);
+  animation: cover-scroll-cue 1.8s ease-in-out infinite;
+}
+
+.cover__scroll:hover,
+.cover__scroll:focus {
+  color: var(--color-sienna);
+}
+
+@keyframes cover-scroll-cue {
+  0%, 100% { opacity: 0.25; transform: translate(-50%, 0); }
+  50% { opacity: 1; transform: translate(-50%, 6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover__scroll {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* Desktop only: nudge the cover group (art + names + date) up a bit so it
+   sits higher on the first screen. transform doesn't affect layout, so the
+   section keeps its full height and Detalles stays below the fold. */
+@media (min-width: 720px) {
+  .cover__art {
+    transform: translateY(clamp(-84px, -9vh, -40px));
+  }
+
+  /* More air between names, divider and date/place on desktop. */
+  .cover__divider {
+    margin: clamp(22px, 4.2cqw, 40px) auto;
+  }
+
+  /* A bit more space between the flowers and the names, web only. */
+  .cover__names {
+    margin-top: clamp(16px, 3cqw, 30px);
+  }
+}
+
+/* Phones: names stacked (Mirna Be / & / José Miguel) at a size where
+   "José Miguel" spans nearly the full width, then the divider, then
+   place and date each on its own line (client layout, 2026-09-21). */
+@media (max-width: 719px) {
+  .cover__names {
+    font-size: 15.4cqw;
+    line-height: 1.02;
+    margin-top: 2cqw;
+  }
+
+  .cover__names span {
+    display: block;
+  }
+
+  .cover__amp {
+    font-size: 0.7em;
+    line-height: 1.1;
+  }
+
+  .cover__divider {
+    margin: clamp(24px, 7cqw, 36px) auto clamp(22px, 6.5cqw, 34px);
+  }
+
+  .cover__meta {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+    font-size: clamp(12px, 4.1cqw, 19px);
+    letter-spacing: 0.1em;
+  }
+
+  .cover__dot {
+    display: none;
+  }
+}
